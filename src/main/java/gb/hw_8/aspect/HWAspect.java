@@ -51,8 +51,8 @@ public class HWAspect {
             log.info("result = {}", returnValue);
             return returnValue;
         } catch (Throwable e) {
-            List<Class<? extends RuntimeException>> exceptions = extractExceptions(joinPoint);
-            if (exceptions.contains(e.getClass())) {
+//            List<Class<? extends RuntimeException>> exceptions = extractExceptions(joinPoint);
+            if (checkExceptions(joinPoint, e)) {
                 log.info("exception = [{}, {}]", e.getClass(), e.getMessage());
                 throw e;
             }
@@ -61,9 +61,14 @@ public class HWAspect {
         }
     }
 
-    public List<Class<? extends RuntimeException>> extractExceptions(JoinPoint joinPoint) {
+    public boolean checkExceptions(JoinPoint joinPoint, Throwable e) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         RecoverException annotation = methodSignature.getMethod().getAnnotation(RecoverException.class);
-        return Arrays.stream(annotation.noRecoverFor()).toList();
+        List<Class<? extends RuntimeException>> exceptions = Arrays.stream(annotation.noRecoverFor()).toList();
+        for (Class<? extends RuntimeException> exception : exceptions) {
+            log.warn("{}", exception);
+            if (exception.isAssignableFrom(e.getClass())) return true;
+        }
+        return false;
     }
 }

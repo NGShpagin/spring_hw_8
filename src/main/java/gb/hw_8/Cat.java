@@ -24,6 +24,6 @@ public class Cat implements Animal {
     @Override
     @RecoverException
     public void getSleep(Integer duration) {
-        throw new ResolutionException("cat sleeping ....");
+        throw new NumberFormatException("cat sleeping ....");
     }
 }

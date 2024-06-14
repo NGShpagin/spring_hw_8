@@ -4,6 +4,8 @@ import gb.hw_8.aspect.RecoverException;
 import gb.hw_8.aspect.Timer;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 @Component
@@ -24,6 +26,6 @@ public class Dog implements Animal {
     @Timer
     @RecoverException
     public void getSleep(Integer duration) {
-        throw new NoSuchElementException("dog sleeping ....");
+        throw new IndexOutOfBoundsException("dog sleeping ....");
     }
 }

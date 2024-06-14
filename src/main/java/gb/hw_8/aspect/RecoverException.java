@@ -9,5 +9,5 @@ import java.util.NoSuchElementException;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RecoverException {
-    Class<? extends RuntimeException>[] noRecoverFor() default  {NoSuchElementException.class};
+    Class<? extends RuntimeException>[] noRecoverFor() default  {IllegalArgumentException.class};
 }
